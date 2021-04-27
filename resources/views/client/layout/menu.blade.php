@@ -6,34 +6,34 @@
                 <li><a class="home_link" title="خانه" href="index.html"><span>خانه</span></a></li>
                 <li class="mega-menu dropdown"><a>دسته ها</a>
                     <div class="dropdown-menu">
-{{--                        @foreach($categories as $category)--}}
+                        @foreach($categories as $category)
                             <div class="column col-lg-2 col-md-3">
                                 <a href="category.html">
-{{--                                    {{$category->title}}--}}
+                                    {{$category->title}}
                                 </a>
                                 <div>
                                     <ul>
-{{--                                        @foreach($category->children as $childCategory)--}}
+                                        @foreach($category->children as $childCategory)
                                             <li><a href="category.html">
-{{--                                                    {{$childCategory->title}} @if($childCategory->children->count() > 0) <span>&rsaquo;</span> @endif</a>--}}
-{{--                                            @if($childCategory->children->count() > 0)--}}
+                                                    {{$childCategory->title}} @if($childCategory->children->count() > 0) <span>&rsaquo;</span> @endif</a>
+                                            @if($childCategory->children->count() > 0)
                                                 <div class="dropdown-menu">
                                                     <ul>
-{{--                                                        @foreach($childCategory->children as $subCategory)--}}
+                                                        @foreach($childCategory->children as $subCategory)
                                                             <li><a href="category.html">
-{{--                                                                    {{$subCategory->title}}--}}
+                                                                    {{$subCategory->title}}
                                                                 </a></li>
-{{--                                                        @endforeach--}}
+                                                        @endforeach
                                                     </ul>
                                                 </div>
-{{--                                            @endif--}}
-{{--                                        @endforeach--}}
+                                            @endif
+                                        @endforeach
                                         </li>
 
                                     </ul>
                                 </div>
                             </div>
-{{--                        @endforeach--}}
+                        @endforeach
                     </div>
                 </li>
                 <li class="menu_brands dropdown"><a href="#">برند ها</a>

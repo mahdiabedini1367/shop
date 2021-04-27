@@ -522,12 +522,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#
-{{--{{route('categories.create')}}--}}
-                                "><i class="mdi mdi-toggle-switch-off"></i>ایجاد</a></li>
-                        <li><a href="#
-{{--{{route('categories.index')}}--}}
-                                "><i class="mdi mdi-toggle-switch-off"></i>لیست</a></li>
+                        <li><a href="{{route('categories.create')}}"><i class="mdi mdi-toggle-switch-off"></i>ایجاد</a></li>
+                        <li><a href="{{route('categories.index')}}"><i class="mdi mdi-toggle-switch-off"></i>لیست</a></li>
                     </ul>
                 </li>
 
@@ -909,6 +905,7 @@
             @yield('content')
             <!-- /.row -->
         </section>
+
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

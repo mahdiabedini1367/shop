@@ -7,10 +7,10 @@
         <div class="col-sm-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">ایجاد دسته بندی</h3>
+                    <h3 class="box-title">ویرایش دسته بندی</h3>
                 </div>
                 <div class="box-body">
-                    <form action="{{route('panel.categories.update', $category)}}" method="post">
+                    <form action="{{route('categories.update', $category)}}" method="post">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">

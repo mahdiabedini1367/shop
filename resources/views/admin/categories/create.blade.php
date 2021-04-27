@@ -12,6 +12,12 @@
                 <div class="box-body">
                     <form action="{{route('categories.store')}}" method="post">
                         @csrf
+
+                        <div class="form-group">
+                            <label for="title">عنوان</label>
+                            <input type="text" class="form-control" name="title" id="title">
+                        </div>
+
                         <div class="form-group">
                             <label for="category_id">دسته والد</label>
                             <select name="category_id" id="category_id" class="form-control">
@@ -21,10 +27,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="title">عنوان</label>
-                            <input type="text" class="form-control" name="title" id="title">
-                        </div>
+
 
                         <div class="form-group">
                             <input type="submit" name="submin" id="submit" value="ثبت" class="btn btn-primary">
