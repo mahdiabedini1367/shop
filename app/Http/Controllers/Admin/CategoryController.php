@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-//dd('run index');
+//dd(Category::all()->toArray());
         return view('admin.categories.index',[
             'categories' =>Category::all()
 

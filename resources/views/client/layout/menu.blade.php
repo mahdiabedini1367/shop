@@ -1,6 +1,6 @@
 <div class="container">
     <nav id="menu" class="navbar">
-        <div class="navbar-header"> <span class="visible-xs visible-sm"> منو <b></b></span></div>
+        <div class="navbar-header"><span class="visible-xs visible-sm"> منو <b></b></span></div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 <li><a class="home_link" title="خانه" href="index.html"><span>خانه</span></a></li>
@@ -15,20 +15,21 @@
                                     <ul>
                                         @foreach($category->children as $childCategory)
                                             <li><a href="category.html">
-                                                    {{$childCategory->title}} @if($childCategory->children->count() > 0) <span>&rsaquo;</span> @endif</a>
-                                            @if($childCategory->children->count() > 0)
-                                                <div class="dropdown-menu">
-                                                    <ul>
-                                                        @foreach($childCategory->children as $subCategory)
-                                                            <li><a href="category.html">
-                                                                    {{$subCategory->title}}
-                                                                </a></li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                        </li>
+                                                    {{$childCategory->title}} @if($childCategory->children->count() > 0)
+                                                        <span>&rsaquo;</span> @endif</a>
+                                                @if($childCategory->children->count() > 0)
+                                                    <div class="dropdown-menu">
+                                                        <ul>
+                                                            @foreach($childCategory->children as $subCategory)
+                                                                <li><a href="category.html">
+                                                                        {{$subCategory->title}}
+                                                                    </a></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                @endforeach
+                                            </li>
 
                                     </ul>
                                 </div>
@@ -38,19 +39,17 @@
                 </li>
                 <li class="menu_brands dropdown"><a href="#">برند ها</a>
                     <div class="dropdown-menu">
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/apple_logo-60x60.jpg" title="اپل" alt="اپل" /></a><a href="#">اپل</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/canon_logo-60x60.jpg" title="کنون" alt="کنون" /></a><a href="#">کنون</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"> <a href="#"><img src="/client/image/product/hp_logo-60x60.jpg" title="اچ پی" alt="اچ پی" /></a><a href="#">اچ پی</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/htc_logo-60x60.jpg" title="اچ تی سی" alt="اچ تی سی" /></a><a href="#">اچ تی سی</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/palm_logo-60x60.jpg" title="پالم" alt="پالم" /></a><a href="#">پالم</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/sony_logo-60x60.jpg" title="سونی" alt="سونی" /></a><a href="#">سونی</a> </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/canon_logo-60x60.jpg" title="test" alt="test" /></a><a href="#">test</a> </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/apple_logo-60x60.jpg" title="test 3" alt="test 3" /></a><a href="#">test 3</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/canon_logo-60x60.jpg" title="test 5" alt="test 5" /></a><a href="#">test 5</a> </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/canon_logo-60x60.jpg" title="test 6" alt="test 6" /></a><a href="#">test 6</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/apple_logo-60x60.jpg" title="test 7" alt="test 7" /></a><a href="#">test 7</a> </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/canon_logo-60x60.jpg" title="test1" alt="test1" /></a><a href="#">test1</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#"><img src="/client/image/product/apple_logo-60x60.jpg" title="test2" alt="test2" /></a><a href="#">test2</a></div>
+                        @foreach($brands as $brand)
+                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6"><a href="#">
+                                    <img
+                                        src="{{str_replace('public','/storage',$brand->image)}}
+                                            " title="{{$brand->name}}" alt="{{$brand->name}}"
+                                        style="width: 50px;height: 50px;min-height: 50px;max-height: 50px;min-width: 50px;max-width: 50px;"
+                                    />
+                                </a>
+                                <a
+                                    href="#">{{$brand->name}}</a></div>
+                        @endforeach
                     </div>
                 </li>
                 <li class="custom-link"><a href="#">لینک های دلخواه</a></li>
@@ -71,14 +70,23 @@
                                         <td><h4>پشتیبانی ویژه</h4></td>
                                     </tr>
                                     <tr>
-                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا تصویری را در آن قرار دهید.</td>
-                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا تصویری را در آن قرار دهید.</td>
-                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا تصویری را در آن قرار دهید.</td>
+                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا
+                                            تصویری را در آن قرار دهید.
+                                        </td>
+                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا
+                                            تصویری را در آن قرار دهید.
+                                        </td>
+                                        <td>این یک بلاک مدیریت محتواست. شما میتوانید هر نوع محتوای html نوشتاری یا
+                                            تصویری را در آن قرار دهید.
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong></td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong></td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong></td>
+                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong>
+                                        </td>
+                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong>
+                                        </td>
+                                        <td><strong><a class="btn btn-primary btn-sm" href="#">ادامه مطلب</a></strong>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

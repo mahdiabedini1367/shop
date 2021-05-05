@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\PictureController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class,'index']);
+Route::prefix('')->name('client.')->group(function() {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/products/{product}', [ClientProductController::class, 'show'])->name('products.show');
 
+});
 
 
 Route::group(['prefix' => 'adminpanel'], function () {
@@ -36,6 +44,11 @@ Route::prefix('/adminpanel')->group(function (){
 //        Route::delete('/{category}',[CategoryController::class,'destroy'])->name('admin.categories.destroy');
 //    });
     Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('products.pictures', PictureController::class);
+    Route::resource('products.discounts', DiscountController::class);
+
 });
 
 
