@@ -1,7 +1,18 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DiscountController;
+use App\Http\Controllers\Admin\PictureController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\PropertyController;
+use App\Http\Controllers\Admin\PropertyGroupController;
+use App\Http\Controllers\Admin\RoleContorller;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\RegisterController;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +26,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class,'index']);
+Route::prefix('')->name('client.')->group(function() {
+    Route::get('/', [HomeController::class, 'index'])->name('index');
 
+    Route::get('/products/{product}', [ClientProductController::class, 'show'])->name('products.show');
+
+
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register/sendmail', [RegisterController::class, 'sendMail'])->name('register.sendmail');
+    Route::get('/register/otp/{user}', [RegisterController::class, 'otp'])->name('register.otp');
+    Route::post('/register/verifyOtp/{user}', [RegisterController::class, 'verifyOtp'])->name('register.verifyOtp');
+
+    Route::delete('/logout', [RegisterController::class, 'logout'])->name('logout');
+});
 
 
 Route::group(['prefix' => 'adminpanel'], function () {
 
 });
-Route::prefix('/adminpanel')->group(function (){
+Route::prefix('/adminpanel')->middleware([CheckPermission::class.":view_dashboard",'auth'])->group(function (){
+
+
     Route::get('/', function () {
         return view('admin.home');
     });
@@ -36,6 +60,16 @@ Route::prefix('/adminpanel')->group(function (){
 //        Route::delete('/{category}',[CategoryController::class,'destroy'])->name('admin.categories.destroy');
 //    });
     Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('products.pictures', PictureController::class);
+    Route::resource('products.discounts', DiscountController::class);
+    Route::resource('propertyGroups', PropertyGroupController::class);
+    Route::resource('properties', PropertyController::class);
+
+
+    Route::resource('roles', RoleContorller::class);
+    Route::resource('users', UserController::class);
 });
 
 

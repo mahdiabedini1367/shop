@@ -28,6 +28,20 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label>تخصیص  گروه مشخصات </label>
+                            <div class="row">
+                                @foreach($properties as $property)
+                                    <label for="{{$property->id}}" class="col-sm-2">
+                                        <input type="checkbox" name="properties[]" value="{{$property->id}}" id="{{$property->id}}"
+                                               style="opacity: 1 !important;position: static !important; left: 0;right: 0;padding: 2px;margin: 3px;"
+                                        >{{$property->title}}
+                                    </label>
+                                @endforeach
+                            </div>
+
+                        </div>
+
 
                         <div class="form-group">
                             <input type="submit" name="submin" id="submit" value="ثبت" class="btn btn-primary">

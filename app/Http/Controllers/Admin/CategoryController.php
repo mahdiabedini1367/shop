@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewCategoryRequest;
 use App\Models\Category;
+use App\Models\PropertyGroup;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -16,10 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-//dd('run index');
         return view('admin.categories.index',[
             'categories' =>Category::all()
-
             ]);
     }
 
@@ -32,6 +31,7 @@ class CategoryController extends Controller
     {
         return view('admin.categories.create',[
             'categories'=>Category::all(),
+            'properties'=>PropertyGroup::all(),
             ]);
     }
 
@@ -43,10 +43,12 @@ class CategoryController extends Controller
      */
     public function store(NewCategoryRequest $request)
     {
-        Category::query()->create([
+        $category = Category::query()->create([
             'title'=>$request->get('title'),
             'category_id'=>$request->get('category_id'),
         ]);
+
+        $category->propertyGroups()->attach($request->get('properties'));
 
         return redirect(route('categories.index'));
     }
@@ -73,6 +75,7 @@ class CategoryController extends Controller
         return view('admin.categories.edit',[
             'category'=>$category,
             'categories'=>Category::all(),
+            'properties'=>PropertyGroup::all(),
             ]);
     }
 
@@ -90,6 +93,8 @@ class CategoryController extends Controller
             'title'=>$request->get('title'),
         ]);
 
+        $category->propertyGroups()->sync($request->get('properties'));
+
         return redirect(route('categories.index'));
     }
 
@@ -101,7 +106,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->propertyGroups()->detach();
+
         $category->delete();
+
 //        ddd($category);
         return redirect(route('categories.index'));
     }
