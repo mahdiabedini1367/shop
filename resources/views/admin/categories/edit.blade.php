@@ -13,6 +13,14 @@
                     <form action="{{route('categories.update', $category)}}" method="post">
                         @csrf
                         @method('PATCH')
+
+
+                        <div class="form-group">
+                            <label for="title">عنوان</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                   value="{{$category->title}}">
+                        </div>
+
                         <div class="form-group">
                             <label for="category_id">دسته والد</label>
                             <select name="category_id" id="category_id" class="form-control">
@@ -20,15 +28,27 @@
                                 @foreach($categories as $parent)
                                     <option
                                         @if($parent->id == $category->category_id)
-                                            selected
+                                        selected
                                         @endif
-                                    value="{{$parent->id}}">{{$parent->title}}</option>
+                                        value="{{$parent->id}}">{{$parent->title}}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label for="title">عنوان</label>
-                            <input type="text" class="form-control" name="title" id="title" value="{{$category->title}}">
+                            <label>تخصیص گروه مشخصات </label>
+                            <div class="row">
+                                @foreach($properties as $property)
+                                    <label for="{{$property->id}}" class="col-sm-2">
+                                        <input type="checkbox" name="properties[]" value="{{$property->id}}"
+                                               id="{{$property->id}}"
+                                               style="opacity: 1 !important;position: static !important; left: 0;right: 0;padding: 2px;margin: 3px;"
+                                               @if($category->hasPropertyGroup($property)) checked="checked"  @endif
+                                        >{{$property->title}}
+                                    </label>
+                                @endforeach
+                            </div>
+
                         </div>
 
                         <div class="form-group">

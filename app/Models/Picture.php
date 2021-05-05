@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Picture extends Model
 {
     use HasFactory;
+    protected $table='pictures';
+
     protected $guarded=['id'];
     protected $fillable =[ 'product_id', 'path', 'mime', 'size'];
 

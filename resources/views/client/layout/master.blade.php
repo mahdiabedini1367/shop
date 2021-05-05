@@ -116,10 +116,21 @@
                         </div>
                     </div>
                     <div id="top-links" class="nav pull-right flip">
-                        <ul>
-                            <li><a href="login.html">ورود</a></li>
-                            <li><a href="register.html">ثبت نام</a></li>
-                        </ul>
+                        @auth()
+                            <ul>
+                                <li>
+                                    <form action="{{route('client.logout')}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" value="خروج" class="btn btn-primary" name="logout">
+                                    </form>
+                                </li>
+                            </ul>
+                        @else
+                            <ul>
+                                <li><a href="{{route('client.register')}}">ورود/ثبت نام</a></li>
+                            </ul>
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -229,12 +240,12 @@
 
 {{--    =======================================================================--}}
 {{--    =======================================================================--}}
-        @yield('content')
+@yield('content')
 {{--    =======================================================================--}}
 {{--    =======================================================================--}}
-    <!--Footer Start-->
-  @include('client.layout.footer')
-    <!--Footer End-->
+<!--Footer Start-->
+@include('client.layout.footer')
+<!--Footer End-->
     <!-- Facebook Side Block Start -->
     <div id="facebook" class="fb-left sort-order-1">
         <div class="facebook_icon"><i class="fa fa-facebook"></i></div>

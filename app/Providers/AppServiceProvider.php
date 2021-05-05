@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
 //        برای اعمال در کل صفحات از * استفاده می کنیم
 
 //        dd(Category::query()->where('category_id', null)->get()->toArray());
-        view()->composer(['client.products.show', 'client.home'], function ($view) {
+        view()->composer(['client.*'], function ($view) {
             $view->with([
                 'categories' => Category::query()->where('category_id', null)->get(),
                 'brands' => Brand::all(),

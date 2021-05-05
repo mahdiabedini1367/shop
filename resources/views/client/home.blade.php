@@ -44,7 +44,7 @@
                                     <ul>
                                         @foreach($category->children as $childCategory)
                                             <li><a href="category.html">{{$childCategory->title}}</a>
-                                                @if($childCategory->children->count() > 0)
+                                                @if($childCategory->has_children)
                                                     <span class="down"></span>
                                                     <ul>
                                                         @foreach($childCategory->children as $subCategory)

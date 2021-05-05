@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleRequest;
-use App\Models\Permission;
-use App\Models\Role;
+use App\Http\Requests\PropertyGroupRequest;
+use App\Models\PropertyGroup;
 use Illuminate\Http\Request;
 
-class RoleContorller extends Controller
+class PropertyGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,48 +16,43 @@ class RoleContorller extends Controller
      */
     public function index()
     {
-        return view('admin.roles.index',[
-            'roles'=>Role::all(),
+        return view('admin.propertyGroups.index',[
+            'properties'=>PropertyGroup::all(),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return  view('admin.roles.create',[
-            'permissions'=>Permission::all(),
-        ]);
+        return view('admin.propertyGroups.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function store(RoleRequest $request)
+    public function store(PropertyGroupRequest $request)
     {
-        $role = Role::query()->create([
+        PropertyGroup::query()->create([
             'title'=>$request->get('title'),
         ]);
 
-        $role->permissions()->attach($request->get('permissions'));
-
-        return redirect(route('roles.index'));
-
+        return redirect(route('propertyGroups.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\PropertyGroup  $propertyGroup
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(PropertyGroup $propertyGroup)
     {
         //
     }
@@ -66,46 +60,43 @@ class RoleContorller extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\PropertyGroup  $propertyGroup
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(PropertyGroup $propertyGroup)
     {
-        return view('admin.roles.edit' , [
-            'role'=>$role,
-            'permissions'=>Permission::all(),
+        return view('admin.propertyGroups.edit',[
+            'property'=>$propertyGroup,
         ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\PropertyGroup  $propertyGroup
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(RoleRequest $request, Role $role)
+    public function update(PropertyGroupRequest $request, PropertyGroup $propertyGroup)
     {
-        $role->update([
-            'title'=>$request->get('title',$role->title),
+        $propertyGroup->update([
+            'title'=>$request->get('title',$propertyGroup->title),
         ]);
 
-        $role->permissions()->sync($request->get('permissions'));
-
-        return  redirect(route('roles.index'));
+        return redirect(route('propertyGroups.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\PropertyGroup  $propertyGroup
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(PropertyGroup $propertyGroup)
     {
-        $role->permissions()->detach();
-        $role->delete();
+        $propertyGroup->delete();
+        return redirect(route('propertyGroups.index'));
 
-        return redirect(route('roles.index'));
     }
 }

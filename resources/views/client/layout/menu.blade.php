@@ -15,9 +15,9 @@
                                     <ul>
                                         @foreach($category->children as $childCategory)
                                             <li><a href="category.html">
-                                                    {{$childCategory->title}} @if($childCategory->children->count() > 0)
+                                                    {{$childCategory->title}} @if($childCategory->has_children)
                                                         <span>&rsaquo;</span> @endif</a>
-                                                @if($childCategory->children->count() > 0)
+                                                @if($childCategory->has_children)
                                                     <div class="dropdown-menu">
                                                         <ul>
                                                             @foreach($childCategory->children as $subCategory)

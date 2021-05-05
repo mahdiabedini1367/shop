@@ -7,10 +7,10 @@
         <div class="col-sm-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">ایجاد دسته بندی</h3>
+                    <h3 class="box-title">ایجاد نقش </h3>
                 </div>
                 <div class="box-body">
-                    <form action="{{route('categories.store')}}" method="post">
+                    <form action="{{route('roles.store')}}" method="post">
                         @csrf
 
                         <div class="form-group">
@@ -19,23 +19,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id">دسته والد</label>
-                            <select name="category_id" id="category_id" class="form-control">
-                                <option value="" disabled selected>دسته والد را انتخاب کنید ..</option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->title}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>تخصیص  گروه مشخصات </label>
+                            <label> انتخاب دسترسی ها</label>
                             <div class="row">
-                                @foreach($properties as $property)
-                                    <label for="{{$property->id}}" class="col-sm-2">
-                                        <input type="checkbox" name="properties[]" value="{{$property->id}}" id="{{$property->id}}"
+                                @foreach($permissions as $permission)
+                                    <label for="{{$permission->id}}" class="col-sm-2">
+                                        <input type="checkbox" name="permissions[]" value="{{$permission->id}}" id="{{$permission->id}}"
                                                style="opacity: 1 !important;position: static !important; left: 0;right: 0;padding: 2px;margin: 3px;"
-                                        >{{$property->title}}
+                                        >{{$permission->label}}
                                     </label>
                                 @endforeach
                             </div>
@@ -51,5 +41,7 @@
             </div>
         </div>
     </div>
+
+    @include('errors')
 
 @endsection
