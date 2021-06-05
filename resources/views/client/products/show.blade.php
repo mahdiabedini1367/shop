@@ -80,15 +80,15 @@
                                     <li class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                         @if($product->hasDiscount())
 
-                                        <span class="price-old">{{$product->cost}}   تومان</span>
+                                            <span class="price-old">{{$product->cost}}   تومان</span>
                                         @endif
 
-{{--                                        <span itemprop="price">{{$product->costWithDiscount()}}--}}
-{{--                                            =====معادل اند=======--}}
-                                            <span itemprop="price">{{$product->cost_with_discount}}
+                                        {{--                                        <span itemprop="price">{{$product->costWithDiscount()}}--}}
+                                        {{--                                            =====معادل اند=======--}}
+                                        <span itemprop="price">{{$product->cost_with_discount}}
 
                                             تومان <span itemprop="availability"
-                                                                                        content="موجود">
+                                                        content="موجود">
                                             </span>
                                         </span>
                                     </li>
@@ -181,33 +181,29 @@
                                     -->
                                 </div>
                             </div>
+
+                            @php
+                                $propertyGroups=$product->category->propertyGroups;
+                            @endphp
                             <div id="tab-specification" class="tab-pane">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <td colspan="2"><strong>حافظه</strong></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>تست 1</td>
-                                        <td>8gb</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <td colspan="2"><strong>پردازشگر</strong></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>تعداد هسته</td>
-                                        <td>1</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                @foreach($propertyGroups as $group)
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <td colspan="2"><strong>{{$group->title}}</strong></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($group->properties as $property)
+                                            <tr>
+                                                <td>{{$property->title}}</td>
+                                                <td>{{$property->getValueForProduct($product)}}</td>
+                                            </tr>
+                                        @endforeach
+
+                                        </tbody>
+                                    </table>
+                                @endforeach
                             </div>
                             <div id="tab-review" class="tab-pane">
                                 <form class="form-horizontal">
@@ -275,45 +271,42 @@
                                         <div class="text-right"></div>
                                     </div>
                                     <h2>یک بررسی بنویسید</h2>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label for="input-name" class="control-label">نام شما</label>
-                                            <input type="text" class="form-control" id="input-name" value=""
-                                                   name="name">
-                                        </div>
-                                    </div>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label for="input-review" class="control-label">بررسی شما</label>
-                                            <textarea class="form-control" id="input-review" rows="5"
-                                                      name="text"></textarea>
-                                            <div class="help-block"><span class="text-danger">توجه :</span> HTML
-                                                بازگردانی نخواهد شد!
+                                    <form action="{{route('client.products.comments.store',$product)}}" method="post">
+                                        @csrf
+                                        <div class="form-group required">
+                                            <div class="col-sm-12">
+                                                <label for="content" class="control-label">بررسی شما</label>
+                                                <textarea class="form-control" id="content" rows="5"
+                                                          name="content"></textarea>
+                                                <div class="help-block"><span class="text-danger">توجه :</span> HTML
+                                                    بازگردانی نخواهد شد!
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group required">
-                                        <div class="col-sm-12">
-                                            <label class="control-label">رتبه</label>
-                                            &nbsp;&nbsp;&nbsp; بد&nbsp;
-                                            <input type="radio" value="1" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="2" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="3" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="4" name="rating">
-                                            &nbsp;
-                                            <input type="radio" value="5" name="rating">
-                                            &nbsp;خوب
+                                        <div class="form-group required">
+                                            <div class="col-sm-12">
+                                                <label class="control-label">رتبه</label>
+                                                &nbsp;&nbsp;&nbsp; بد&nbsp;
+                                                <input type="radio" value="1" name="rating">
+                                                &nbsp;
+                                                <input type="radio" value="2" name="rating">
+                                                &nbsp;
+                                                <input type="radio" value="3" name="rating">
+                                                &nbsp;
+                                                <input type="radio" value="4" name="rating">
+                                                &nbsp;
+                                                <input type="radio" value="5" name="rating">
+                                                &nbsp;خوب
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="pull-right">
-                                            <button class="btn btn-primary" id="button-review" type="button">ادامه
-                                            </button>
+                                        <div class="buttons">
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary" id="button-review" type="button">ادامه
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
+
                                 </form>
                             </div>
                         </div>
@@ -338,7 +331,7 @@
                                             class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></div>
                                 </div>
                                 <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>افزودن به سبد</span>
+                                    <button class="btn-primary" type="button" onClick="addToCart({{$product->id}});"><span>افزودن به سبد</span>
                                     </button>
                                     <div class="add-to-links">
                                         <button type="button" data-toggle="tooltip" title="افزودن به علاقه مندی"

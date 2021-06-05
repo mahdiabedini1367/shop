@@ -50,19 +50,11 @@ class CategoryController extends Controller
 
         $category->propertyGroups()->attach($request->get('properties'));
 
+
         return redirect(route('categories.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

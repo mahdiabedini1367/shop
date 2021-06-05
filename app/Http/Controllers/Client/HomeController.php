@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\FeaturedCategory;
 use App\Models\Product;
+use App\Models\slider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,6 +19,8 @@ class HomeController extends Controller
 
 //        dd(Category::query()->where('category_id',null)->get(),);
         return view('client.home',[
+            'featuredCategory'=>FeaturedCategory::getCategory(),
+            'sliders'=>slider::all(),
             ]);
     }
 }

@@ -35,7 +35,7 @@ class Product extends Model
 
     public function addPicture(ProductPictureRequest $request)
     {
-        $path = $path = $request->file('image')->store('public/image/products');;
+        $path = $request->file('image')->store('public/image/products');;
         $this->pictures()->create([
             'path' => $path,
             'mime' => $request->file('image')->getClientMimeType(),
@@ -45,13 +45,13 @@ class Product extends Model
 
     public function deletePicture(Picture $picture)
     {
-        Storage::delete($picture->path);
-        $picture->delete();
+//        Storage::delete($picture->path);
+//        $picture->delete();
     }
 
     public function discount()
     {
-        return $this->hasOne(Discount::class);
+        return $this->hasOne(Discount::class ,'product_id');
     }
 
     public function addDiscount(DiscountRequest $request)
@@ -71,6 +71,8 @@ class Product extends Model
     {
         return $this->discount()->exists();
     }
+
+//    public function
 
     public function deleteDiscount()
     {
@@ -100,6 +102,19 @@ class Product extends Model
     public function getDiscountValueAttribute()
     {
         return $this->has_discount ? $this->discount->value : null;
+    }
+
+//رابطه محصولات با ویژگی یک رابطه چند به چند ساده نیست
+//چون جدول واسط دارای یک فیلد value است که باید پر شود به همین خاطر اونایی که توسط کاربر باید پر شود
+// داخل تابع withPivot تعریف می کنیم اگر timestamp هم که داریم که باید پر شود از
+//تابع withTimeStaps() استفاده می کنیم به صورت زیر
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class,'product_property')
+//            فیلدهایی که باید توسط کاربر پر شود در داخل تابع withPivot تعریف می کنیم
+                    ->withPivot(['value'])
+//            برای created_at  و updated_at هم از تابع زیر استفاده می کنیم
+                    ->withTimestamps();
     }
 
 

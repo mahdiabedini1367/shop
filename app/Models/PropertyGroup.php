@@ -13,4 +13,10 @@ class PropertyGroup extends Model
 
     protected $guarded=['id'];
     protected $fillable=['title'];
+
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }

@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+ @extends('admin.layout.master')
 
 
 @section('content')
@@ -23,6 +23,7 @@
                                 <th>برند</th>
                                 <th>دسته بندی</th>
                                 <th>تاریخ ایجاد</th>
+                                <th>مشخصات</th>
                                 <th>تصویر</th>
                                 <th>گالری تصاویر</th>
                                 <th>تخفیف</th>
@@ -41,6 +42,10 @@
                                     <td>{{$product->brand->name}}</td>
                                     <td>{{$product->category->title}}</td>
                                     <td>{{$product->created_at}}</td>
+                                    <td>
+                                        <a href="{{route('products.properties.index', $product)}}"
+                                           class="btn btn-sm btn-primary">ویژگی ها</a>
+                                    </td>
                                     <td>
                                         <img src="{{str_replace('public','/storage',$product->image)}}"
                                              style="min-width: 50px;max-width: 50px;min-height: 50px;max-height: 50px;"

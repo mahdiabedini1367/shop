@@ -11,25 +11,20 @@ use Illuminate\Support\Facades\Storage;
 
 class PictureController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @param  \App\Http\Requests\ProductPictureRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Product $product,ProductPictureRequest $request)
+
+    public function store(ProductPictureRequest $request, Product $product)
     {
-        $product->addPicture($request);
+        $path = $request->file('image')->store('public/image/products');;
+        $product->pictures()->create([
+            'path' => $path,
+            'mime' => $request->file('image')->getClientMimeType(),
+            'size' => $request->file('image')->getSize(),
+        ]);
 
         return redirect()->back();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
+
     public function index(Product $product)
     {
 //        dd($product);
@@ -38,59 +33,31 @@ class PictureController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Product $product)
     {
-        //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Picture  $picture
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Picture $picture)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Picture  $picture
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Product $product  ,Picture $picture)
     {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Picture  $picture
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Product $product  ,Request $request, Picture $picture)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Picture  $picture
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Product $product  ,Picture $picture)
     {
 
+        Storage::delete($picture->path);
+        $picture->delete();
         $product->deletePicture($picture);
 
 
